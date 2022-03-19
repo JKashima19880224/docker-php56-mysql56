@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  web:
+      container_name: web
+      build:
+        context: .
+        dockerfile: ./docker/php/Dockerfile
+      ports:
+      - "80:80"
+      volumes:
+        - .:/var/www/html
+
+  mysql:
+      container_name: mysql5.6
+      build:
+        context: .
+        dockerfile: ./docker/mysql/Dockerfile
+      environment:
+          MYSQL_ROOT_PASSWORD: hoge
+          MYSQL_DATABASE: test
+          MYSQL_USER: huga
+          MYSQL_PASSWORD: huga
+      volumes:
+          - "./docker/mysql/data:/var/lib/mysql"
+          - "./docker/mysql/initdb.d:/docker-entrypoint-initdb.d"
+      ports:
+          - "3306:3306"
